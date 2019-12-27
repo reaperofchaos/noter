@@ -22,6 +22,9 @@ A frontend application to organize buttons that copy text to the clipboard, open
 <a href="https://github.com/reaperofchaos/noter/wiki/Classes">Classes</a>
 
 # Installation
+## Download
+<a href="https://github.com/reaperofchaos/noter/archive/master.zip">Noter Zip File </a>
+
 ## NodeJS
 <pre>
 npm install @reaperofchaos/noter
