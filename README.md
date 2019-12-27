@@ -8,23 +8,26 @@ A frontend application to organize buttons that copy text to the clipboard, open
 
 # Documentation
 <a href="https://github.com/reaperofchaos/noter/wiki">Home</a>
+
 <a href="https://github.com/reaperofchaos/noter/wiki/Basic-Usage">Basic Usage</a>
+
 <a href="https://github.com/reaperofchaos/noter/wiki/Button-Object">Button Object</a>
+
 <a href="https://github.com/reaperofchaos/noter/wiki/Forms-Object">Form Object</a>
+
 <a href="https://github.com/reaperofchaos/noter/wiki/Table-Object">Table Object</a>
+
 <a href="https://github.com/reaperofchaos/noter/wiki/Gallery-Object">Gallery Object</a>
+
 <a href="https://github.com/reaperofchaos/noter/wiki/Classes">Classes</a>
 
 # Installation
-NodeJS
+## NodeJS
 <pre>
 npm install @reaperofchaos/noter
 </pre>
 
-
-
-
-
-
-A tool to create and copy notes to the clipboard<br />
-
+## Git
+<pre>
+  git clone https://github.com/reaperofchaos/noter.git
+</pre>
