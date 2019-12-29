@@ -4,44 +4,44 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>Noter w/KI Admin</title>
+		<title>Noter</title>
 		<!-- External Libraries -->
-		<script type="text/javascript" src="javascript/jquery-ui-1.12.1.custom/external/jquery/jquery.js"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script src="javascript/jquery-3.3.1.slim.min.js"></script>
+		<script src="javascript/popper.min.js"></script>
+		<script src="javascript/bootstrap.js"></script>
 		<!--Javascript Classes -->
 		<script type="text/javascript" src="javascript/classes/Button.class.js"></script>
 		<script type="text/javascript" src="javascript/classes/ButtonGroup.class.js"></script>
-		<script type="text/javascript" src="javascript/classes/ChatScripts.class.js?r=2"></script>
+		<script type="text/javascript" src="javascript/classes/ChatScripts.class.js"></script>
 		<script type="text/javascript" src="javascript/classes/CopyButton.class.js"></script>
-		<script type="text/javascript" src="javascript/classes/Email.class.js?r=3"></script>
-		<script type="text/javascript" src="javascript/classes/Flow.class.js?r=3"></script>
-		<script type="text/javascript" src="javascript/formVariables.js?r=3"></script>
-		<script type="text/javascript" src="javascript/classes/Gallery.class.js?r=3"></script>
-		<script type="text/javascript" src="javascript/classes/Image.class.js?r=3"></script>
-		<script type="text/javascript" src="javascript/classes/macAddressLookup.class.js?r=3"></script>
-		<script type="text/javascript" src="javascript/classes/MultiForm.class.js?r=3"></script>
-		<script type="text/javascript" src="javascript/classes/NewForm.class.js?r=3"></script>
-		<script type="text/javascript" src="javascript/classes/NoterCategory.class.js?r=2"></script>
-		<script type="text/javascript" src="javascript/classes/NoteSelector.class.js?r=2"></script>
-		<script type="text/javascript" src="javascript/classes/Problems.class.js?r=2"></script>
-		<script type="text/javascript" src="javascript/classes/PromoNote.class.js?r=3"></script>
-		<script type="text/javascript" src="javascript/classes/SearchBox.class.js?r=2"></script>
+		<script type="text/javascript" src="javascript/classes/Email.class.js"></script>
+		<script type="text/javascript" src="javascript/classes/Flow.class.js"></script>
+		<script type="text/javascript" src="javascript/formVariables.js"></script>
+		<script type="text/javascript" src="javascript/classes/Gallery.class.js"></script>
+		<script type="text/javascript" src="javascript/classes/Image.class.js"></script>
+		<script type="text/javascript" src="javascript/classes/NewForm.class.js"></script>
+		<script type="text/javascript" src="javascript/classes/NoterCategory.class.js"></script>
+		<script type="text/javascript" src="javascript/classes/NoteSelector.class.js"></script>
+		<script type="text/javascript" src="javascript/classes/SearchBox.class.js"></script>
 		<script type="text/javascript" src="javascript/classes/startNoter.js"></script>
 		<script type="text/javascript" src="javascript/classes/TabButton.class.js"></script>
-		<script type="text/javascript" src="javascript/classes/Table.class.js?r=3"></script>
-		<script type="text/javascript" src="javascript/classes/Tools.class.js?r=3"></script>
+		<script type="text/javascript" src="javascript/classes/Table.class.js"></script>
+		<!--Optional Javascript Classes used for sample functions only -->
+		<script type="text/javascript" src="javascript/classes/SampleEmails.class.js"></script>
+		<script type="text/javascript" src="javascript/classes/macAddressLookup.class.js"></script>
+		<script type="text/javascript" src="javascript/classes/Tools.class.js"></script>
 		<!--JSON Files - Data sources for various functions-->
 		<script type="text/javascript" src="javascript/json/buttons.json"></script>
-		<script type="text/javascript" src="javascript/json/forms.json?r=3"></script>
-		<script type="text/javascript" src="javascript/json/macAddressLookup.json"></script>
 		<script type="text/javascript" src="javascript/json/response.json"></script>
+		<script type="text/javascript" src="javascript/json/forms.json"></script>
+		<script type="text/javascript" src="javascript/json/emails.json"></script>
+		<!--JSON Files used for sample Functions -->
+		<script type="text/javascript" src="javascript/json/macAddressLookup.json"></script>
 		<script type="text/javascript" src="javascript/json/tableExample.json"></script>
+		<script type="text/javascript" src="javascript/json/foxGallery.json"></script>
 		<!--CSS Files -->
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-		<link rel="stylesheet" type="text/css" href="javascript/jquery-ui-1.12.1.custom/jquery-ui.min.css">
-		<link rel="stylesheet" type="text/css" href="javascript/jquery-timepicker-1.4.13/jquery.timepicker.min.css">
+		<link rel="stylesheet" href="css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="css/noter.css">
-		<link rel="stylesheet" type="text/css" href="css/animations.css">
 	</head>
 	<body>
 		<div>
@@ -94,15 +94,7 @@
 		</div>
 	<script language='javascript'>
 		var myVar;
-
-		function loading() {
-			myVar = setTimeout(showPage, 3000);
-		}
-
-		function showPage() {
-			document.getElementById("loadingDiv").style.display = "none";
-			document.getElementById("main").style.display = "block";
-		}	
+		//Tab Functions
 		const nextTab = () =>
 			{
 				var tabs = document.getElementById("menu");
@@ -122,14 +114,12 @@
 						? $('#menu a[href=\"#noter\"]').tab('show')
 						: $('#menu a:last').tab('show')
 			};
-			  
+		//Copy Functions
 		const setdestination = (location, value) => 
 			{ document.getElementById(location).innerHTML = value }
 			
 		const copyit = (theField, name, destination = 1) =>
-			{
-				//event.preventDefault();
-				
+			{				
 				destination != "1"
 					? ( setdestination("Preview", theField),
 						setdestination("Preview_"+destination, theField),
@@ -157,7 +147,8 @@
 				console.log('Unable to copy');
 			}
 		}
-
+	//event listener needed for copy buttons that are dynamically generated.
+	//(ie. most every copy button in the noter) 
 	document.querySelector('body').addEventListener('click', function(event) {
 		for (var i = 0; i < copyClass.length; i++) {
 			copyClass[i].addEventListener('click', copyFunction, false);

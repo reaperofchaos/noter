@@ -13,15 +13,13 @@
      */
 	 
 class Gallery {
-		constructor(imageList, cols, id, height, width){
+		constructor(imageList, cols, id){
 			this.imageList = imageList;
 			this.cols = cols;
 			this.id = id;
-			this.height = height;
-			this.width = width; 
 		}
 		createRow(currElement, colCount){
-			var html = '';
+			var html = "";
 			var i = colCount - 1;
 			colCount == 1
 				? html += "<tr>"
@@ -34,13 +32,19 @@ class Gallery {
 			return html;
 		}
 		
+		static build({imageList, cols, id}, galleryName)
+		{
+			var myGallery = new Gallery(imageList, cols, id); 
+			var html = myGallery.create();
+			createTab(galleryName, galleryName, html);			
+		}
+		
 		create(){
 			var html = "<div id='" + this.id + "' class='"+ this.classType +"'>"
-					 + "<table class='table borderless'>";
-					 console.log(this.imageList);
+					 + "<table class='table borderless table-sm'>";
 			this.imageList.map((currElement, index) =>
 				{
-					var img = new Image(currElement.name, currElement.image, this.height, this.width)
+					var img = new Image(currElement.name, currElement.src, currElement.height, currElement.width)
 					var colCount = index + 1; 
 					html += this.createRow(img, colCount);
 				});

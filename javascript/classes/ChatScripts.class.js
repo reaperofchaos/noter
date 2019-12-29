@@ -25,7 +25,6 @@ class ChatScripts {
 						<td>
 							<label for='chatOptions'>Chat Scripts:  </label>
 							<select name='chatOptions' id='chatOptionsBox' onClick = 'ChatScripts.getChatScripts()'>`;
-	console.log(this.chatTypes);
 	var groupNames = this.chatTypes.map((currentElement)=>{
 								html += `<option name='${currentElement}'>${currentElement}</option>`;
 							});
@@ -41,10 +40,9 @@ class ChatScripts {
 		var cols = 3;
 		var id = 'frm1';
 		var classType = 'level1';
-		//var chatButtons = new ButtonGroup(buttons, cols, id, classType);
-		//var html2 = chatButtons.create('copy');
 	document.getElementById("chatScripts").innerHTML = html;
-	//document.getElementById("buttons").innerHTML = html2;
+	//display the first chatTypeOption
+	ChatScripts.getChatButtons();
 	}
 	
 	static getSubGroupNames(chatOption, currentElement){
@@ -73,21 +71,20 @@ class ChatScripts {
 		html += ChatScripts.getAllAvailableSubChatOptions(chatTypeOption);
 		document.getElementById('chatSubOptions').innerHTML = html;
 	}	
-	static getChatButtonNames(chatTypeOption, subChatOption){
+	static getChatButtonNames(chatTypeOption, subChatOption= ""){
+			console.log(`Chat Option: ${chatTypeOption} and subchat option: ${subChatOption}`);
 			const isChatButton = response => response.groupName == chatTypeOption && response.subGroup == subChatOption;
 			var buttons; 
 			var chatButtonArray = response.filter(isChatButton)
 				.map((currentElement)=>{
 					buttons = currentElement.buttons;
 				});
+			console.log(buttons); 
 			return buttons; 
 	}
 	static checkIfSubChatBox(chatTypeOption){
 		var subChatType;
 		var subChatOption;
-		chatTypeOption == ''
-			? document.getElementById('chatSubOptions').innerHTML = ''
-			: null; 
 		document.getElementById('chatSubOptions').innerHTML != null
 			? subChatType = document.getElementById('chatSubOptionsBox')
 			: subChatType = null;
@@ -96,15 +93,26 @@ class ChatScripts {
 			: subChatOption = '';
 		return subChatOption;
 	}
+	//Creates copy buttons - called when chatOptionsBox or subChatOption dropdowns change. 
 	static getChatButtons(){
+		//get the chatOption Value
 		var chatType = document.getElementById('chatOptionsBox');
 		var chatTypeOption = chatType.options[chatType.selectedIndex].value;
-		var subChatOption = ChatScripts.checkIfSubChatBox(chatTypeOption);
+		//get the subChatOption value
+		var subChatOption = '';
+		 ChatScripts.checkIfSubChatBox(chatTypeOption) != null
+			? subChatOption = ChatScripts.checkIfSubChatBox(chatTypeOption)
+			: subChatOption = '';
+		console.log("the subchat option is" + subChatOption); 
+		//Create a list of chat buttons. 
 		var chatButtonsList = ChatScripts.getChatButtonNames(chatTypeOption, subChatOption);
+		console.log('The getChatButtons chatButtonsList buttons are ');
+		console.log(chatButtonsList); 
 		var cols = 3;
 		var id = 'frm1';
 		var classType = 'level1';
 		var chatButtons = new ButtonGroup(chatButtonsList, cols, id, classType);
+		//create copy buttons and palce them in the buttons div
 		var html = chatButtons.create('copy');
 		document.getElementById('buttons').innerHTML = html;
 	}
@@ -112,9 +120,9 @@ class ChatScripts {
 	static getChatScripts(){
 		var chatType = document.getElementById('chatOptionsBox');
 		var chatTypeOption = chatType.options[chatType.selectedIndex].value;
-		chatTypeOption == ''
-			? ChatScripts.getChatButtons() //search for chat buttons
-			: ChatScripts.changeChatOptions(); //search for subChat options
+		ChatScripts.changeChatOptions(); //search for subChatOptions
+		
+		ChatScripts.getChatButtons(); //search for chat buttons
 	}
 	 getUniqueChatTypes(){
 		var lookup = {};

@@ -20,8 +20,18 @@ class Image{
 
 	create(){
 		var html = "";
-		html += `<img src="${this.src}" width="${this.width}" height="${this.height}" alt="${this.name}" onclick="getRecord('${this.name}')"></img><br/>
-				<p>${this.name}</p>`;
+		html += `<table class='table'>
+					<tr>
+						<td style="text-align: center;">
+							<img src="${this.src}" width="${this.width}" height="${this.height}" alt="${this.name}" onclick="getRecord('${this.name}')"></img><br/>
+						</td>
+					</tr>
+					<tr>
+						<td style="text-align: center;">
+							${this.name}
+						</td>
+					</tr>
+				</table>`;
 		return html;
 	}
 }

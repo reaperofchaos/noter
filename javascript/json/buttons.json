@@ -102,6 +102,28 @@
 				"classType": "tablinks",
 				"value": "MAC Address Lookup",
 				"response": ""
+			},
+			{
+				"name": "foxGallery",
+				"action": "Gallery.build(foxes,\"FoxGallery\")",
+				"classType": "tablinks",
+				"value": "Foxes Gallery",
+				"response": ""
+			},
+		]
+	},
+	{
+		"groupName": "Emails",
+		"subGroup": "",
+		"subGroup2": "",
+		"type": "radioButton",
+		"buttons": [
+			{
+				"name": "removews",
+				"action": "Email.buildForm(\"helloEmailForm\", \"SampleEmails\")",
+				"classType": "tablinks",
+				"value": "Greeting Email",
+				"response": ""
 			}
 		]
 	}

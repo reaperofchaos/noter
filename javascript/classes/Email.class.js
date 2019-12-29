@@ -1,240 +1,104 @@
-	 /**
-     * @Name: Email Class
-     * @Description: Builds form to copy text in an email form
-     * @Parameters: 
-	 *            
-     * @Methods: 
-     * @Author: Jacob Conner
-     */
-	 
-class Email {
-	constructor(){
+class Email{
+	constructor(name, tabNo, variables, functionName, displayName, preview, subject){
+		 this.name = name; 
+		 this.tabNo = tabNo;
+		 this.buttons = variables; 
+		 this.groups = variables.groups;
+		 this.variables = variables.buttons;
+		 this.functionName = functionName; 
+		 this.displayName = displayName; 
+		 this.preview = preview; 
+		 this.subject = subject;
 	 }
-	static create(){
-		var html='';
-		var emailsMiscToolButtonList = [{name: "wliEmail",
-										 action:"MiscTools.wliEmailForm(this.value)",
-										 classType: "copy",
-										 value: "WLI Email"
-										},
-										{name: "embarqPastDue",
-										 action:"MiscTools.neacEmailForm(this.value)",
-										 classType: "copy",
-										 value: "Embarq Order Past Due Email"
-										},
-										{name: "viasatPasswordReset",
-										 action:"MiscTools.viasatEmailForm(this.value)",
-										 classType: "copy",
-										 value: "ViaSat Password Reset"
-										},
-										{name: "viasatPasswordResetAgent",
-										 action:"MiscTools.viasatEmailFormAgent(this.value)",
-										 classType: "copy",
-										 value: "ViaSat Password Reset to Agent"
-										},
-										{name: "likeForNonLike",
-										 action:"MiscTools.likeForNonLikeEmailForm(this.value)",
-										 classType: "copy",
-										 value: "Like For Non-Like"
-										},
-										{name: "spidEmail",
-										 action:"MiscTools.spidEmailForm(this.value)",
-										 classType: "copy",
-										 value: "SPID Email"
-										},
-										{name: "UATEmail",
-										 action:"MiscTools.uatEmailForm(this.value)",
-										 classType: "copy",
-										 value: "UAT Email"
-										},
-										{name: "cboDefectEmail",
-										 action:"MiscTools.cboDefectEmailForm(this.value)",
-										 classType: "copy",
-										 value: "CBO Defect Email"
-										},
-										{name: "UATDefectEmail",
-										 action:"MiscTools.uatDefectEmailForm('CBIS')",
-										 classType: "copy",
-										 value: "UAT - Defect Email"
-										},
-										{name: "bbProjectEmail",
-										 action:"MiscTools.bbProjectEmailForm(this.value)",
-										 classType: "copy",
-										 value: "BB Project Email"
-										}];
-			var id = 'subMiscButtons';
-			var classType = 'level2Buttons';
-			var emailsMiscToolButtons = new ButtonGroup(emailsMiscToolButtonList, 3, id, classType);
-			html += emailsMiscToolButtons.create();
-	   +"<div id='emailResult'>"
-	   +"</div>";
-	createTab("Email","Email", html);
-	}
-	static emailsCreate(){
-			var html='';
-			var emailsMiscToolButtonList = [{name: "wliEmail",
-										 action:"MiscTools.wliEmailForm(this.value)",
-										 classType: "copy",
-										 value: "WLI Email"
-										},
-										{name: "embarqPastDue",
-										 action:"MiscTools.neacEmailForm(this.value)",
-										 classType: "copy",
-										 value: "Embarq Order Past Due Email"
-										},
-										{name: "viasatPasswordReset",
-										 action:"MiscTools.viasatEmailForm(this.value)",
-										 classType: "copy",
-										 value: "ViaSat Password Reset"
-										},
-										{name: "viasatPasswordResetAgent",
-										 action:"MiscTools.viasatEmailFormAgent(this.value)",
-										 classType: "copy",
-										 value: "ViaSat Password Reset to Agent"
-										},
-										{name: "likeForNonLike",
-										 action:"MiscTools.likeForNonLikeEmailForm(this.value)",
-										 classType: "copy",
-										 value: "Like For Non-Like"
-										},
-										{name: "spidEmail",
-										 action:"MiscTools.spidEmailForm(this.value)",
-										 classType: "copy",
-										 value: "SPID Email"
-										},
-										{name: "UATEmail",
-										 action:"MiscTools.uatEmailForm(this.value)",
-										 classType: "copy",
-										 value: "UAT Email"
-										},
-										{name: "cboDefectEmail",
-										 action:"MiscTools.cboDefectEmailForm(this.value)",
-										 classType: "copy",
-										 value: "CBO Defect Email"
-										},
-										{name: "UATDefectEmail",
-										 action:"MiscTools.uatDefectEmailForm(\"CBIS\")",
-										 classType: "copy",
-										 value: "UAT  Defect Email"
-										},
-										{name: "bbProjectEmail",
-										 action:"MiscTools.bbProjectEmailForm(this.value)",
-										 classType: "copy",
-										 value: "BB Project Email"
-										}];
-			var id = 'subMiscButtons';
-			var classType = 'level2Buttons';
-			var emailsMiscToolButtons = new ButtonGroup(emailsMiscToolButtonList, 3, id, classType);
-			html += emailsMiscToolButtons.create();
-			document.getElementById("emailResult").innerHTML=html;
+	 create(colNo){	
+		const formName = () =>
+				{
+					return this.functionName.replace(/[A-Za-z].*\./, "")
+									   .replace(/\(.*\)/, "") + "_form";
+				};
+		var displayName = this.displayName;
+		var buttons; 
+		var html = `<form name='${this.name}' action='${this.functionName}.php'>`;
+		this.groups.map((currentElement)=>{
+				var length = currentElement.length;
+				//console.log(`length: ${length}`);
+				var buttonsG = new ButtonGroup(currentElement, length, 'testid', 'test');
+				html += `${buttonsG.createNoDiv()} <br />`
+		});
+		if(this.variables){
+			buttons = new ButtonGroup(this.variables, colNo, formName(), 'form');
+		  html += `${buttons.createNoDiv()} <br />`;
 		}
-	static getContacts(){
-		var category = document.getElementById('category');
-		  var categoryOption = category.options[category.selectedIndex].value;
-		console.log(categoryOption);
-		//Populate the contact select box with values
-		if (categoryOption == 'DNW'){
-			var options = [];
-			var i = 0;
-			while (phoneNo.length > i){
-				if (phoneNo[i].category == 'DNW'){	
-					options.push(phoneNo[i].name);
-				}
-				i++;
-			}
-			console.log(options);
-			PhoneNo.createSelectBox(options, 'contact', 'PhoneNo.getNOs');
-		}else if (categoryOption == 'DNS'){
-			var i = 0;
-			var options1 = [];
-			while (phoneNo.length > i){
-				if (phoneNo[i].category == 'DNS'){
-					options1.push(phoneNo[i].name);
-				}
-				i++;
-			}
-			console.log(options1);
-			PhoneNo.createSelectBox(options1, 'contact', 'PhoneNo.getNOs');
-		}else if (categoryOption == 'Commercial'){
-			var i = 0;
-			var options1 = [];
-			while (phoneNo.length > i){
-				if (phoneNo[i].category == 'Commercial'){
-					options1.push(phoneNo[i].name);
-				}
-				i++;
-			}
-			console.log(options1);
-			PhoneNo.createSelectBox(options1, 'contact', 'PhoneNo.getNOs');
-		}else if (categoryOption == 'TV'){
-			var i = 0;
-			var options1 = [];
-			while (phoneNo.length > i){
-				if (phoneNo[i].category == 'TV'){
-					options1.push(phoneNo[i].name);
-				}
-				i++;
-			}
-			console.log(options1);
-			PhoneNo.createSelectBox(options1, 'contact', 'PhoneNo.getNOs');
-		}else if(categoryOption == 'Dish Fiber'){
-			var i = 0;
-			var options2 = [];
-			while (phoneNo.length > i){
-				if (phoneNo[i].category == 'Dish Fiber'){
-					options2.push(phoneNo[i].name);
-				}
-				i++;
-			}
-			console.log(options2);
-			PhoneNo.createSelectBox(options2, 'contact', 'PhoneNo.getNOs');
-		}else {
-		}
-	}	
-	static createSelectBox(array, name, functionName){
-		var i = 0;
-		var html = "<select id = '"+ name + "' ";
-		if (functionName){
-			html+= "onclick='" + functionName + "()'>";
-			}else{
-			html+= ">";
-			}
-			html +="<option id = ''></option>";
-		while (array.length > i){
-			html+= "<option id='" + array[i] + "'>" + array[i] + "</option>";
-			i++;
-		}
-		html +="</select>";
-		document.getElementById('contactNo').innerHTML=html;
-	}
-
-	static getNOs(){
-		var i = 0;
-		var result = document.getElementById('contactResult');
-		var contact = document.getElementById('contact');
-		var contactOption = contact.options[contact.selectedIndex].value;
-		while (phoneNo.length > i){
-			if(phoneNo[i].name == contactOption){
-				var html = "<strong>Name:</strong> " + phoneNo[i].name + "<br />";
-				html+= "<strong>Phone No:</strong> " + phoneNo[i].phoneNo;
-				if (phoneNo[i].phoneOption != ""){
-					html+= " Option " + phoneNo[i].phoneOption + "<br />";
-				}else{
-					html+= "<br/>";
-				}
-				if (phoneNo[i].clec != ""){
-					html += "<strong> CLEC:</strong> " + phoneNo[i].clec + "<br />"; 
-				}else{}
-				if (phoneNo[i].email != ""){
-					html += "<strong> Email:</strong> " + phoneNo[i].email + "    <input type='button' class='copy' value='Copy' onclick = copyit('" + phoneNo[i].email + "')></input><br />";
-					html += "<textarea id='Preview' style = 'width: 300px;'></textarea><br/>";
-				}else{}
-				if (phoneNo[i].description != ""){
-					html += "<strong> Description</strong><br/> " + phoneNo[i].description + "<br />"; 
-				}else{}
-				}
-			i++;
-		}
-		result.innerHTML = html;
-	}
+		html += `<input class='copy' id='formCreate' type='button' value='Create' onclick='${this.functionName}'></input>
+				</form>`;
+		//Create a preview box
+		this.preview 
+			? html += `<br />
+			 <br />
+			 <p id='templateName_${this.tabNo}' class='templateName'>${displayName}</p>
+			 <p id='Preview_${this.tabNo}' class='Preview'></p>`
+			 : null;
+		//Create Subject Line
+		html += `<input class='copy' value='Create Subject Line' id='subjectCreate_${this.tabNo}' type='button' onclick='copyit(\"${this.subject}\", "subject", destination = "subject${this.tabNo}")'></input>
+			<br />
+			 <br />
+			 <p id='templateName_subject${this.tabNo}' class='templateName'>${displayName}</p>
+			 <p id='Preview_subject${this.tabNo}' class='Preview'></p>`
+		var results = {"html": html,
+						tab(){ createTab(formName(), displayName, html);
+						}
+					  }
+		return results; 
+	 }
+	 // buttonGroup constructor(buttons, cols, id, classType)
+	 static buildForm(name, type){
+		 
+		const IsName = emailList => emailList.name == name; 
+		var formsObject = emailList.filter(IsName)
+								  .map((currentElement)=>{
+									var id = nextTab(); 
+									var functionName;
+									var variables = {};
+									var groups = [];
+									variables.buttons = [];
+									variables.groups = [];
+									var variablesList = currentElement.variables.map((currentVariable)=> {
+										//console.log(currentVariable);
+										if(Array.isArray(currentVariable)){
+											groups = [];
+											//console.log(`Array: ${Array.isArray(currentVariable)}`);
+											//console.log(currentVariable);
+											currentVariable.map((cv)=>{
+												groups.push(window[cv](id))
+												});
+											variables.groups.push(groups);	
+										}else{ 
+											variables.buttons.push(window[currentVariable](id));	
+										}
+									});
+									
+									//console.log(variables.groups);
+									var colTotal = colTotal;
+									functionName = type +"." + currentElement.functionName + "(" + id +")"
+									var newForm1 = new Email(name, 
+															   id, 
+															   variables, 
+															   functionName, 
+															   currentElement.displayName,
+															   currentElement.preview,
+															   currentElement.subject);
+									const formName = () =>
+										{
+											return functionName.replace(/[A-Za-z].*\./, "")
+															   .replace(/\(.*\)/, "") + "_form";
+										};			   
+									if(document.getElementById(formName())){
+										$('#menu a[href=\'#'+formName()+'\']').tab('show')
+									}else{					   
+										newForm1.create(currentElement.colTotal).tab();		
+										document.getElementById('templateName_'+id).innerHTML = currentElement.displayName;
+									}							
+								  });
+	 }
 }
+
