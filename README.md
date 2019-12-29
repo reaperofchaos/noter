@@ -4,7 +4,7 @@
 A frontend application to organize buttons that copy text to the clipboard, open links and display and search information stored in json files.
 
 # Demo
-<a href = "https://reaperofchaos.github.io/Noter.html">https://reaperofchaos.github.io/Noter.html</a><br />
+<a href = "https://reaperofchaos.github.io/Noter.html">https://reaperofchaos.github.io/noter/noter.html</a><br />
 
 # Documentation
 <a href="https://github.com/reaperofchaos/noter/wiki">Home</a>
